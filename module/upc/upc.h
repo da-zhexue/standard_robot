@@ -1,7 +1,7 @@
 #ifndef STANDARD_ROBOT_UPC_H
 #define STANDARD_ROBOT_UPC_H
-#include "bsp_uart.h"
-#include "bsp_can.h"
+#include "uart/bsp_uart.h"
+#include "can/bsp_can.h"
 
 #define UPC_HEADER 0xA5
 #define UPC_HEADER_LEN 5

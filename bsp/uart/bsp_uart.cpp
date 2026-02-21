@@ -1,10 +1,12 @@
 /* @file bsp_uart.cpp
  * @brief USART驱动
  * @version 1.0
- * @TODO : 增加错误日志。如何区分不同设备？(目前中断回调会进入同一个usart的所有decode函数)
+ * @TODO: 增加错误日志。如何区分不同设备？(目前中断回调会进入同一个usart的所有decode函数)
+ * @TODO: bsp层应该返回错误码，以便module层log输出，而不是在bsp层直接log输出，bsp层程序必须保持独立性，减少对其他文件的依赖，以便于移植
+ * @TODO: 需要修改不采用双缓冲区时的串口初始化与中断回调方式，当前方式需要在cubemx中将接收方式从Circle改为Normal
  */
 
-#include "bsp_uart.h"
+#include "uart/bsp_uart.h"
 #define GET_UART_INDEX(instance) ((instance) == USART1 ? 0 : ((instance) == USART3 ? 1 : 2))
 
 extern DMA_HandleTypeDef hdma_usart1_rx;

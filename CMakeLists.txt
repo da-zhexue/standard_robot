@@ -18,8 +18,8 @@ set(CMAKE_CXX_EXTENSIONS ON)
 
 set_source_files_properties(
         Core/Src/stm32f4xx_it.c
-        bsp/bsp_init.c
-        PROPERTIES LANGUAGE CXX  # 关键：指定用C++编译器
+        bsp/dwt/bsp_dwt.c
+        PROPERTIES LANGUAGE CXX
 )
 
 # Define the build type
@@ -42,6 +42,7 @@ enable_language(C CXX ASM)
 
 # Create an executable object type
 add_executable(${CMAKE_PROJECT_NAME}
+
 )
 
 # Add STM32CubeMX generated sources
@@ -59,26 +60,23 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
         bsp/can/bsp_can.cpp
         bsp/algorithm/crc.c
         bsp/algorithm/user_lib.c
-        bsp/bsp_init.c
+        bsp/bsp_init.cpp
         module/motor/dji/M3508.cpp
         module/upc/upc.cpp
         app/comm.cpp
         app/test.cpp
         bsp/online_detect/onl_det.cpp
         bsp/dtm/dtm.cpp
+        bsp/ulog/ulog.c
+        app/task_init.c
+        bsp/dwt/bsp_dwt.c
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
-        Middlewares/ETL/include
-        bsp/uart
-        bsp/can
-        bsp/algorithm
-        bsp/dtm
         bsp
-        module/motor/dji
-        module/upc
+        module
         app
 )
 
@@ -89,6 +87,7 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
         USART1_DOUBLE_BUFFER_ENABLE
         USART3_DOUBLE_BUFFER_ENABLE
         USART6_DOUBLE_BUFFER_ENABLE
+        LOG_ENABLE
 )
 
 # Remove wrong libob.a library dependency when using cpp files

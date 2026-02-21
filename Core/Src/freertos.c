@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "comm.h"
+#include "task_init.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,8 +48,6 @@
 
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
-osThreadId commTaskHandle;
-osThreadId testTaskHandle;
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 extern void test_task(void const* argument);
@@ -106,12 +104,9 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of defaultTask */
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
-  osThreadDef(commTask, CommTask, osPriorityNormal, 0, 128);
-  commTaskHandle = osThreadCreate(osThread(commTask), NULL);
-  osThreadDef(testTask, test_task, osPriorityNormal, 0, 128);
-  testTaskHandle = osThreadCreate(osThread(testTask), NULL);
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+  task_init();
   /* USER CODE END RTOS_THREADS */
 
 }

@@ -1,6 +1,6 @@
 #ifndef STANDARD_ROBOT_TEST_H
 #define STANDARD_ROBOT_TEST_H
-#include "dtm.h"
+#include "dtm/dtm.h"
 extern "C" {
 void test_task(void const* argument);
 }

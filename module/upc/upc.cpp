@@ -1,10 +1,8 @@
-#include "upc.h"
-#include "crc.h"
-#include "user_lib.h"
+#include "upc/upc.h"
+#include "algorithm/crc.h"
+#include "algorithm/user_lib.h"
 #include <functional>
-#include "dtm.h"
-
-DTM_DECLARE_TOPIC(float, test1);
+#include "dtm/dtm.h"
 
 upc::upc(UART_HandleTypeDef *huart)
     : UART_Instance(huart, [this]<typename T0>(T0 && PH1) { decode(std::forward<T0>(PH1)); }),

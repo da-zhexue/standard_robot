@@ -6,11 +6,9 @@
  * @date 2026-01-17
  */
 
-#include "stdlib.h"
 #include "string.h"
-#include "user_lib.h"
+#include "algorithm/user_lib.h"
 #include "math.h"
-#include "main.h"
 
 /*---------------------------------------数据转换--------------------------------------- */
 /**

@@ -6,7 +6,7 @@
  * @date 2026-01-17
  */
 
-#include "crc.h"
+#include "algorithm/crc.h"
 #include "typedef.h"
 uint16_t ex;
 //crc8 generator polynomial:G(x)=x8+x5+x4+1 

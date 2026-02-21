@@ -1,11 +1,11 @@
 /* @file bsp_can.cpp
  * @brief CAN总线驱动
  * @version 1.0
- * @TODO : 增加错误日志。如果使用扩展ID，有些设备ID可能包含数据，如何处理？can_map需要改为链表形式方便增删。
+ * @TODO: 如果使用扩展ID，有些设备ID可能包含数据，如何处理？can_map需要改为链表形式方便增删。
+ * @TODO: bsp层应该返回错误码，以便module层log输出，而不是在bsp层直接log输出，bsp层程序必须保持独立性，减少对其他文件的依赖，以便于移植
  */
 
-#include "bsp_can.h"
-#include <map>
+#include "can/bsp_can.h"
 
 typedef struct CAN_Callback
 {
@@ -57,7 +57,6 @@ void CANInstance::cb_register()
     for (int i = 0; i < can_count; ++i){
         if (can_map[i].Instance == handler->Instance && can_map[i].rx_id == rx_id){
             can_map[i].decode = decode;
-            //@TODO: 错误日志：同一设备同一ID注册了多个回调函数，覆盖之前的回调函数
             return;
         }
     }
@@ -102,7 +101,7 @@ void can_filter_init(CAN_HandleTypeDef* hcan)
     HAL_CAN_Start(hcan);
 }
 
-void cb_handle(CAN_TypeDef* CANx, uint32_t RxId, uint8_t* data) // @TODO: 如何提高找到正确回调速度
+void cb_handle(const CAN_TypeDef* CANx, const uint32_t RxId, uint8_t* data) // @TODO: 如何提高找到正确回调速度
 {
     for (int i = 0; i < can_count; ++i){
         if (can_map[i].Instance == CANx && can_map[i].rx_id == RxId){

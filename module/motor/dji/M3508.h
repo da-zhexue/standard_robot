@@ -3,11 +3,11 @@
 
 #include "typedef.h"
 #include "can.h"
-#include "bsp_can.h"
+#include "can/bsp_can.h"
 
 class M3508 : public CANInstance
 {
-private:
+public:
     typedef struct
     {
         uint16_t ecd;
@@ -17,15 +17,16 @@ private:
         int16_t last_ecd;
     }m3508_t;
 
-    uint32_t rx_ids[4];
-    uint8_t motor_num;
-    m3508_t m3508_measure[4];
-public:
     M3508(CAN_HandleTypeDef* handler, uint32_t tx_id, uint8_t motor_num);
     ~M3508();
 
     void send_cmd(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4);
     void decode(const uint8_t* data, const uint8_t motor);
+private:
+    uint32_t rx_ids[4]{};
+    uint8_t motor_num;
+    m3508_t m3508_measure[4]{};
+    int32_t od_handler[4]{};
 };
 
 #endif // M3508_H
